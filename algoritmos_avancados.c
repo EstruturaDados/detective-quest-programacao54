@@ -1,16 +1,83 @@
 #include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
 
 // Desafio Detective Quest
 // Tema 4 - Árvores e Tabela Hash
 // Este código inicial serve como base para o desenvolvimento das estruturas de navegação, pistas e suspeitos.
 // Use as instruções de cada região para desenvolver o sistema completo com árvore binária, árvore de busca e tabela hash.
 
-int main() {
 
+    
+    
     // 🌱 Nível Novato: Mapa da Mansão com Árvore Binária
     //
     // - Crie uma struct Sala com nome, e dois ponteiros: esquerda e direita.
+    typedef struct Sala{
+        char nome[30];
+        struct Sala* esquerda;
+        struct Sala* direita;
+    } Sala;
     // - Use funções como criarSala(), conectarSalas() e explorarSalas().
+    Sala* criarSala(const char*nome){
+        Sala* nova=(Sala*)malloc(sizeof(Sala));
+        strcpy(nova->nome);
+        nova->esquerda=NULL;
+        nova->direita=NULL;
+        return nova;
+    }
+    void conectarSala(Sala* origem,Sala* esquerda,Sala* direita){
+        origem->esquerda=esquerda;
+        origem->direita=direita;
+    }
+    void explorarSala(Sala* atual){
+        char escolha;
+        while(atual!= NULL){
+            printf("Você está na sala: %s\n", atual->nome);
+            printf("Escolha um caminho: esquerda (e), direita(d), sair (s):\n");
+            scanf("%c", &escolha);
+
+            if(escolha=='e'){
+                if (atual->esquerda!= NULL){
+                    atual=atual->esquerda;
+                } else{
+                    printf("Não há sala à esquerda.\n");
+                }
+            }else if (escolha=='d'){
+                if (atual->direita != NULL){
+                    atual=atual->direita;
+                }else{
+                    printf("Não há sala à direita.\n");
+                }
+            }else if (escolha=='s'){
+                printf("Exploração encerrada.\n");
+                break;
+            }else{
+                printf("Opção inválida.\n");
+            }
+        }
+    }
+
+    int main(){
+        Sala* hall=criarSala("Hall de Entrada");
+        Sala* biblioteca=criarSala("Biblioteca");
+        Sala* cozinha=criarSala("Cozinha");
+        Sala* sotao=criarSala("Sótão");
+        Sala* jardim=criarSala("Jardim");
+
+        conectarSala(hall, biblioteca,cozinha);
+        conectarSala(biblioteca,sotao,NULL);
+        conectarSala(cozinha,NULL, jardim);
+
+        explorarSala(hall);
+
+        free(hall);
+        free(biblioteca);
+        free(cozinha);
+        free(sotao);
+        free(jardim);
+        return 0;
+    }
     // - A árvore pode ser fixa: Hall de Entrada, Biblioteca, Cozinha, Sótão etc.
     // - O jogador deve poder explorar indo à esquerda (e) ou à direita (d).
     // - Finalize a exploração com uma opção de saída (s).
@@ -42,6 +109,5 @@ int main() {
     // - Em caso de colisão, use lista encadeada para tratar.
     // - Modularize com funções como inicializarHash(), buscarSuspeito(), listarAssociacoes().
 
-    return 0;
-}
+    
 
