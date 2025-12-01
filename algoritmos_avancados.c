@@ -13,6 +13,7 @@
     // 🌱 Nível Novato: Mapa da Mansão com Árvore Binária
     //
     // - Crie uma struct Sala com nome, e dois ponteiros: esquerda e direita.
+    // Criando struct e definindo variáveis
     typedef struct Sala{
         char nome[30];
         struct Sala* esquerda;
